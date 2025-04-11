@@ -3,7 +3,7 @@
 #define __INSTRUCTION_SET_H__
 
 // First instruction set Basic Architecture Set V1
-enum class BAS1{
+enum class Instructions {
     LTR = 0x00, // load to register
     STM = 0x10, // set to memory
     INC = 0x20, // increment
