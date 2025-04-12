@@ -5,29 +5,23 @@ For fun... and because every programmer must to create its cpu emulator, compile
 #### IDL
 Do nothing. Increment PC
 
-0b**0000000**0 -- 0x00
+0b0**0000000** -- 0x00
 
 ## registers & memory
-#### STR
-Set data to register. Possibly set static data or from any RAM address.
+#### MOV
+Main instruction of any cpu. Sets immediate data to register. Possibly set data from any RAM address. Can copy register data to other register.
 
-L - data length
-    - 0 = 1 byte
-    - 1 = 2 bytes
+L - register type
+    - 0 = 1 byte register
+    - 1 = 2 bytes register
 M - set mode
-    - 00 = static
-    - 01 = from ram
-    - 10 = *reserved*
+    - 00 = immediate
+    - 01 = from ram address
+    - 10 = from register
     - 11 = *reserved*
 R - register address
 
-0b**0000001**L_MMRRRRR0
-
-#### STM
-Set data from register to RAM
-
-#### MOV
-Copies register data to other register
+0b0**0000001**_LMMRRRRR -- 0x01_XX
 
 ## ALU
     INC
