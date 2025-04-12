@@ -24,9 +24,34 @@ R - register address
 0b0**0000001**_LMMRRRRR -- 0x01_XX
 
 ## ALU
-    INC
-    DEC
+#### INC
+Increment data.
+
+L - register type
+    - 0 = 1 byte register
+    - 1 = 2 bytes register
+M - what to increment
+    - 0 = register
+    - 1 = RAM address
+A - address
+
+0b0**000XXXX**_LMRRRRR0 -- 0xXX or 0xXX_AA
+
+#### DEC
+Decrement data.
+
+L - register type
+    - 0 = 1 byte register
+    - 1 = 2 bytes register
+M - what to increment
+    - 0 = register
+    - 1 = RAM address
+A - address
+
+0b0**000XXXX**_LMRRRRR0 -- 0xXX or 0xXX_AA
+
     ADD
+    SUB
     NOT
     XOR
     OR
