@@ -1,7 +1,24 @@
 # trying to create own pc
 For fun... and because every programmer must to create its cpu emulator, compiler and basic operating system lol.
 
-# CPU raw Instructions
+# 16x-CPU V1 
+
+## registers
+### user's
+R0-R15 - single byte registers
+WR0-WR15 - double byte registers
+### special
+PC - Program Counter
+SP - Stack Pointer
+#### flags
+C - Carry (unsigned overflow)
+O - Overflow
+E - Equal
+B - A > B
+Z - Zero
+N - Negative
+
+## raw Instructions
 #### IDL
 Do nothing. Increment PC
 
