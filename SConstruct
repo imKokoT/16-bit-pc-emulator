@@ -1,18 +1,45 @@
 import os
 
-env = Environment(
-    tools=['default', 'msvc'],
-    CXX='cl',
-    CXXFLAGS=['/std:c++17']
-)
 
-src_files = Glob('src/*.cpp')
-obj_files = []
-for src in src_files:
-    # src: e.g., 'src/main.cpp' → 'build/obj/main.o'
-    obj_path = os.path.join('build', 'obj', os.path.splitext(os.path.basename(str(src)))[0] + '.o')
-    obj = env.Object(target=obj_path, source=src)
-    obj_files.append(obj)
+ON = '1'
+OFF = '0'
 
-# building
-env.Program(target='build/bin/emulator', source=obj_files)
+# --- PROJECT SETTINGS ----------------------------------------------------------------------------
+OUTPUT_NAME = 'emulator'
+
+# --- OPTIONS -------------------------------------------------------------------------------------
+debug = ARGUMENTS.get('debug', OFF) == ON
+optimize = ARGUMENTS.get('debug', OFF) == ON  # only release
+
+
+# --- CREATE ENVIRONMENT --------------------------------------------------------------------------
+if debug:
+    env = Environment(
+        tools=['default', 'msvc'],
+        CXXFLAGS=['/std:c++17', '/EHsc', '/Zi', '/FS'],  # /Zi: debug info
+        LINKFLAGS=['/DEBUG']  # generate .pdb files
+    )
+else:
+    flags = ['/std:c++17']
+    if optimize: flags.append('/O2')
+
+    env = Environment(
+        tools=['default', 'msvc'],
+        CXX='cl',
+        CXXFLAGS=flags    
+    )
+
+
+# --- SCAN SOURCES --------------------------------------------------------------------------------
+src = Glob('src/*.cpp')
+obj = []
+for src in src:
+    op = os.path.join('build', 'obj', os.path.splitext(os.path.basename(str(src)))[0] + '.o')
+    o = env.Object(target=op, source=src)
+    obj.append(o)
+
+# --- BUILD ---------------------------------------------------------------------------------------
+if debug:
+    env.Program(target=f'build/bin/{OUTPUT_NAME}-debug', source=obj)
+else:
+    env.Program(target=f'build/bin/{OUTPUT_NAME}', source=obj)
