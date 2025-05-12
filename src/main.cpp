@@ -1,8 +1,4 @@
 #include <iostream>
-#include <locale>
-#include <codecvt>
-#include <io.h>
-#include <fcntl.h>
 
 
 int main() {

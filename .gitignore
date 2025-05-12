@@ -1,5 +1,6 @@
 /.vscode/
 /.vs/
+.sconsign.dblite
 
 /_test/
 
