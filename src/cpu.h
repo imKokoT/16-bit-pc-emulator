@@ -18,6 +18,19 @@ struct CPU_16x
     bool getFlag(ALUFlag flag) {
         return flags & (uint16)flag;
     }
+
+    // returns special register value
+    // 0 = PC
+    // 1 = SP
+    uint16 getSpecialRegister(int index) {
+        switch (index)
+        {
+        case 0: return PC;
+        case 1: return SP;
+        default:
+            return 0;
+        }
+    }
 };
 
 enum class ALUFlag {

@@ -9,6 +9,7 @@ namespace instructions {
     void move(CPU_16x* cpu, RAM* ram){
         int c = ram->get2Bytes(cpu->PC);
         int r = c & 0b1111;
+        int tmp;
         
         switch (c >> 4 & 0b1111)
         {
@@ -22,8 +23,22 @@ namespace instructions {
             cpu->PC += 4;
             break;
         case 0b0010: // from register
-            cpu->R[r] = cpu->R[ram->getByte(cpu->PC+2) >> 4];
-            cpu ->PC += 3;
+            tmp = ram->getByte(cpu->PC+2); // get other register data
+
+            // check other register
+            switch (tmp >> 2 & 0b11) { 
+            case 0b00:  
+                cpu->R[r] = cpu->R[tmp >> 4];
+                break;
+            case 0b01:
+                cpu->R[r] = cpu->WR[tmp >> 4];
+                break;
+            case 0b10:
+            case 0b11:
+                cpu->R[r] = cpu->getSpecialRegister(tmp >> 4);
+                break;
+            }
+            cpu->PC += 3;
             break;
 
         // --- reserved ---
@@ -31,9 +46,11 @@ namespace instructions {
         case 0b1011:
         case 0b0111:
         case 0b0011:
+        default:
             cpu->PC += 2;
             break;
         }
+
     }
 
 }
@@ -77,7 +94,9 @@ int main() {
     ram.data[7] = (uint8)Instruction::MOV;
     ram.data[8] = 0b00100010;
     ram.data[9] = 0x00;
-
+    ram.data[10] = (uint8)Instruction::MOV;
+    ram.data[11] = 0b00100011;
+    ram.data[12] = 0x08;
 
     ram.data[0xf0] = 0x1a;
     ram.data[0xf1] = 0xa1;

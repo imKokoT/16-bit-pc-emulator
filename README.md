@@ -35,12 +35,14 @@ Command length: 1
 #### MOV
 Main instruction of any cpu. Sets immediate data to register. Possibly set data from any RAM address. Can copy register data to other register.
 
-L - register type (length)
+L - register length
     - 0 = 1 byte register
     - 1 = 2 bytes register 
 T - register type
     - 0 = R or WR
-    - 1 = special like PC
+    - 1 = special like PC; map:
+        - 0000 = PC
+        - 0001 = SP
 M - set mode
     - 00 = immediate
     - 01 = from memory address
