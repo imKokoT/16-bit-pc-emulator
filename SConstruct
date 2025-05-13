@@ -1,4 +1,5 @@
 import os
+from glob import glob
 
 
 ON = '1'
@@ -6,6 +7,7 @@ OFF = '0'
 
 # --- PROJECT SETTINGS ----------------------------------------------------------------------------
 OUTPUT_NAME = 'emulator'
+CXX_STANDARD = 'c++20'
 
 # --- OPTIONS -------------------------------------------------------------------------------------
 debug = ARGUMENTS.get('debug', OFF) == ON
@@ -13,33 +15,24 @@ optimize = ARGUMENTS.get('debug', OFF) == ON  # only release
 
 
 # --- CREATE ENVIRONMENT --------------------------------------------------------------------------
+env = Environment()
 if debug:
-    env = Environment(
-        tools=['default', 'msvc'],
-        CXXFLAGS=['/std:c++17', '/EHsc', '/Zi', '/FS'],  # /Zi: debug info
-        LINKFLAGS=['/DEBUG']  # generate .pdb files
-    )
+    env.Append(CXXFLAGS=['/Zi', '/Od', '/EHsc', f'/std:{CXX_STANDARD}'], LINKFLAGS=['/DEBUG'])
 else:
-    flags = ['/std:c++17']
+    flags = ['/EHsc', f'/std:{CXX_STANDARD}']
     if optimize: flags.append('/O2')
 
-    env = Environment(
-        tools=['default', 'msvc'],
-        CXX='cl',
-        CXXFLAGS=flags    
-    )
-
+    env.Append(CXXFLAGS=flags)
+    
 
 # --- SCAN SOURCES --------------------------------------------------------------------------------
-src = Glob('src/*.cpp')
-obj = []
-for src in src:
-    op = os.path.join('build', 'obj', os.path.splitext(os.path.basename(str(src)))[0] + '.o')
-    o = env.Object(target=op, source=src)
-    obj.append(o)
+VariantDir('build/obj', 'src', duplicate=0)
+src = [File(f) for f in glob('src/*.cpp')]
+obj = ['build/obj/' + os.path.basename(str(s)) for s in src]
+
 
 # --- BUILD ---------------------------------------------------------------------------------------
 if debug:
-    env.Program(target=f'build/bin/{OUTPUT_NAME}-debug', source=obj)
+    app = env.Program(target=f'build/bin/{OUTPUT_NAME}-debug', source=obj)
 else:
-    env.Program(target=f'build/bin/{OUTPUT_NAME}', source=obj)
+    app = env.Program(target=f'build/bin/{OUTPUT_NAME}', source=obj)

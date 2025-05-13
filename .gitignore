@@ -1,6 +1,7 @@
 /.vscode/
 /.vs/
 .sconsign.dblite
+*.pdb
 
 /_test/
 

@@ -1,0 +1,47 @@
+#pragma once
+#ifndef __RAM_H__
+#define __RAM_H__
+#include "config.h"
+#include <iostream>
+#include <string>
+
+
+struct RAM
+{
+    uint32 _size; 
+    uint8* data;
+
+    uint8 getByte(int pos) { 
+        if (pos + 1 > _size) {
+            throw std::out_of_range(
+                "RAM ERROR: failed to get byte from position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)
+            ); 
+        }
+        return data[pos];
+    }
+
+    uint16 get2Bytes(int pos) {
+        if (pos + 2 > _size) {
+            throw std::out_of_range(
+                "RAM ERROR: failed to get 2 bytes from position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)
+            ); 
+        }
+        return (uint16)(data)[pos]; 
+    }
+
+    int getSize() { return _size; }
+
+    RAM(int size){
+        _size = size;
+        data = new uint8[size];
+        for (int i = 0; i < size; i++)
+            data[i] = 0;
+    }
+
+    ~RAM() {
+        delete[] data;
+    }
+};
+
+
+#endif // !__RAM_H__

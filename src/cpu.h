@@ -3,6 +3,8 @@
 #define __CPU_H__
 #include "config.h"
 
+enum class ALUFlag;
+
 
 struct CPU_16x
 {
@@ -12,6 +14,10 @@ struct CPU_16x
     uint16 PC;
     uint16 SP;
     uint16 flags;
+
+    bool getFlag(ALUFlag flag) {
+        return flags & (uint16)flag;
+    }
 };
 
 enum class ALUFlag {
@@ -25,6 +31,7 @@ enum class ALUFlag {
 
 enum class Instruction {
     IDL = 0x00,
+    STP = 0x0c,
     MOV = 0x01,
 
     // ALU
@@ -35,9 +42,9 @@ enum class Instruction {
     XOR = 0x06,
      OR = 0x07,
     AND = 0x08,
-    NOT = 0x07,
-    SHR = 0x08,
-    SHL = 0x09,
+    NOT = 0x09,
+    SHR = 0x0a,
+    SHL = 0x0b,
 
     // Branch
     CMP,

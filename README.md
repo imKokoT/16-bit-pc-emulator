@@ -25,6 +25,12 @@ Do nothing. Increment PC
 Command length: 1
 0b0**0000000**
 
+#### STP
+Stop cpu ticking. Power-off.
+
+Command length: 1
+0b0**0001100**
+
 ## registers & memory
 #### MOV
 Main instruction of any cpu. Sets immediate data to register. Possibly set data from any RAM address. Can copy register data to other register.
