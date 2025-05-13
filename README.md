@@ -56,7 +56,7 @@ X - what to increment
 A - address
 
 Command length: 2-4
-0b0**000XXXX**_LXRRRR00 \[0xMMMM\]
+0b0**0000010**_LXRRRR00 \[0xMMMM\]
 
 #### DEC
 Decrement data.
@@ -70,7 +70,7 @@ X - what to increment
     - 1 = memory address
 
 Command length: 2-4
-0b0**000XXXX**_LXRRRR00 \[0xMMMM\]
+0b0**0000011**_LXRRRR00 \[0xMMMM\]
     
 #### ADD
 Add two integers.
@@ -88,7 +88,7 @@ Y - what to add
     - 10 = from register
 
 Command length: 3-6
-0b0**000XXXX**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
+0b0**0000100**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
 
 #### SUB
 Subtract two integers.
@@ -106,7 +106,7 @@ Y - what to subtract
     - 10 = from register
 
 Command length: 3-6
-0b0**000XXXX**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
+0b0**0000101**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
 
 #### XOR
 XOR two numbers.
@@ -124,7 +124,7 @@ Y - what to use for xor
     - 10 = from register
 
 Command length: 3-6
-0b0**000XXXX**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
+0b0**0000110**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
 
 #### OR
 OR two numbers.
@@ -142,7 +142,7 @@ Y - what to use for or
     - 10 = from register
 
 Command length: 3-6
-0b0**000XXXX**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
+0b0**0000111**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
 
 #### AND
 AND two numbers.
@@ -160,7 +160,7 @@ Y - what to use for xor
     - 10 = from register
 
 Command length: 3-6
-0b0**000XXXX**_LX*LYY*000 \[0bRRRR*RRRR*\]
+0b0**0001000**_LX*LYY*000 \[0bRRRR*RRRR*\]
 
 #### NOT
 NOT memory.
@@ -174,7 +174,7 @@ X - what to NOT
     - 1 = memory
 
 Command length: 2-4
-0b0**000XXXX**_LXRRRR00 \[0xMMMM\]
+0b0**0001001**_LXRRRR00 \[0xMMMM\]
 
 #### SHR
 SHift Right data. possible to shift circular to multiple positions.
@@ -190,7 +190,7 @@ C - circular mode
 P - multi position
 
 Command length: 2-5
-0b0**000XXXX**_LXRRRRC0 \[0x*P*0\] \[0xMMMM\] 
+0b0**0001010**_LXRRRRC0 \[0x*P*0\] \[0xMMMM\] 
 
 #### SHL
 SHift Left data. possible to shift circular to multiple positions.
@@ -206,7 +206,7 @@ C - circular mode
 P - multi position
 
 Command length: 2-5
-0b0**000XXXX**_LXRRRRC0 \[0x*P*0\] \[0xMMMM\] 
+0b0**0001011**_LXRRRRC0 \[0x*P*0\] \[0xMMMM\] 
 
 ## Branch
 #### CMP
