@@ -8,8 +8,8 @@ enum class ALUFlag;
 
 struct CPU_16x
 {
-    uint8 R[16];
-    uint16 WR[16];
+    uint8 R[16]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint16 WR[16]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
     uint16 PC;
     uint16 SP;

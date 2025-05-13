@@ -26,7 +26,7 @@ struct RAM
                 "RAM ERROR: failed to get 2 bytes from position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)
             ); 
         }
-        return (uint16)(data)[pos]; 
+        return (uint16)(data)[pos] << 8 | data[pos+1]; 
     }
 
     int getSize() { return _size; }

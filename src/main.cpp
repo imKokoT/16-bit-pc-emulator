@@ -4,6 +4,42 @@
 #include <iostream>
 
 
+namespace instructions {
+
+    void move(CPU_16x* cpu, RAM* ram){
+        int c = ram->get2Bytes(cpu->PC);
+        int r = c & 0b1111;
+        
+        switch (c >> 4 & 0b1111)
+        {
+        // --- 1 byte register ---
+        case 0b0000: // immediate
+            cpu->R[r] = ram->getByte(cpu->PC+2);
+            cpu->PC += 3;
+            break;
+        case 0b0001: // from mem address
+            cpu->R[r] = ram->getByte(ram->getByte(cpu->PC+2));
+            cpu->PC += 4;
+            break;
+        case 0b0010: // from register
+            cpu->R[r] = cpu->R[ram->getByte(cpu->PC+2) >> 4];
+            cpu ->PC += 3;
+            break;
+
+        // --- reserved ---
+        case 0b1111:
+        case 0b1011:
+        case 0b0111:
+        case 0b0011:
+            cpu->PC += 2;
+            break;
+        }
+    }
+
+}
+
+
+
 void run(CPU_16x* cpu, RAM* ram) {
     bool run = true;
 
@@ -11,7 +47,8 @@ void run(CPU_16x* cpu, RAM* ram) {
     {
         switch ((Instruction)ram->getByte(cpu->PC))
         {
-        case Instruction::IDL: break;
+        case Instruction::IDL: cpu->PC++; break;
+        case Instruction::MOV: instructions::move(cpu, ram); break;
         case Instruction::STP:
             run = false;
             break;
@@ -20,8 +57,6 @@ void run(CPU_16x* cpu, RAM* ram) {
                 "CPU error: wrong instruction " + std::to_string(ram->getByte(cpu->PC))
             );
         }
-
-        cpu->PC++;
     }
 }
 
@@ -33,6 +68,20 @@ int main() {
 
     CPU_16x cpu;
     RAM ram(256);
+    ram.data[0] = (uint8)Instruction::MOV;
+    ram.data[1] = 0;
+    ram.data[2] = 0xaa;
+    ram.data[3] = (uint8)Instruction::MOV;
+    ram.data[4] = 0b00010001;
+    ram.data[5] = 0xf0;
+    ram.data[7] = (uint8)Instruction::MOV;
+    ram.data[8] = 0b00100010;
+    ram.data[9] = 0x00;
+
+
+    ram.data[0xf0] = 0x1a;
+    ram.data[0xf1] = 0xa1;
+    ram.data[255] = 255;
 
     try {
         run(&cpu, &ram);
@@ -49,6 +98,13 @@ int main() {
             "\tB=" << cpu.getFlag(ALUFlag::B) <<
             "\tZ=" << cpu.getFlag(ALUFlag::Z) <<
             "\tN=" << cpu.getFlag(ALUFlag::N) << "\n\n";
+        std::cerr << "Registers:\n";
+        for(int i = 0; i < 16; i++)
+            std::cerr << "\tR" << std::dec << i << "=" << std::hex << (int)cpu.R[i];
+        std::cerr << '\n';
+        for(int i = 0; i < 16; i++)
+            std::cerr << "\tWR" << std::dec << i << "=" << std::hex << (int)cpu.WR[i];
+        std::cerr << "\n\n";
 
         std::cerr << "RAM snapshot dumped to 'ram-dump.bin'\n";
         // TODO: RAM DUMP TO FILE

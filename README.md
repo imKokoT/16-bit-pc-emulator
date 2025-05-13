@@ -37,16 +37,19 @@ Main instruction of any cpu. Sets immediate data to register. Possibly set data 
 
 L - register type (length)
     - 0 = 1 byte register
-    - 1 = 2 bytes register
+    - 1 = 2 bytes register 
+T - register type
+    - 0 = R or WR
+    - 1 = special like PC
 M - set mode
     - 00 = immediate
     - 01 = from memory address
-    - 10 = from register
+    - 10 = from register; to command added 1 byte *0bRRRRTL00*
     - 11 = *reserved*
-R - register address
+R - target register address
 
 Command length: 2-4
-0b0**0000001**_LMMRRRR0 \[0x*MMMM*\] \[0xIIII\]
+0b0**0000001**_LTMMRRRR \[0x*RR*\] \[0xIIII\] \[0xAAAA\]
 
 ## ALU
 #### INC
