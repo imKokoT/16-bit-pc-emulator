@@ -47,7 +47,7 @@ M - set mode
     - 00 = immediate
     - 01 = from memory address
     - 10 = from register; to command added 1 byte *0bRRRRTL00*
-    - 11 = *reserved*
+    - 11 = move to address
 R - target register address
 
 Command length: 2-4

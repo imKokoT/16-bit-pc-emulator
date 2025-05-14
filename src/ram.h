@@ -29,6 +29,25 @@ struct RAM
         return (uint16)(data)[pos] << 8 | data[pos+1]; 
     }
 
+    void setByte(int pos, uint8 value) {
+        if (pos + 1 > _size) {
+            throw std::out_of_range(
+                "RAM ERROR: failed to set byte to position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)
+            ); 
+        }
+        data[pos] = value;
+    }
+
+    void set2Bytes(int pos, uint8 value) {
+        if (pos + 2 > _size) {
+            throw std::out_of_range(
+                "RAM ERROR: failed to set 2 bytes to position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)
+            ); 
+        }
+        data[pos] = value >> 8;
+        data[pos+1] = value; 
+    }
+
     int getSize() { return _size; }
 
     RAM(int size){

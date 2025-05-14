@@ -19,7 +19,7 @@ namespace instructions {
             cpu->PC += 3;
             break;
         case 0b0001: // from mem address
-            cpu->R[r] = ram->getByte(ram->getByte(cpu->PC+2));
+            cpu->R[r] = ram->getByte(ram->get2Bytes(cpu->PC+2));
             cpu->PC += 4;
             break;
         case 0b0010: // from register
@@ -40,19 +40,23 @@ namespace instructions {
             }
             cpu->PC += 3;
             break;
+        case 0b0011: // to address
+            ram->setByte(
+                ram->get2Bytes(cpu->PC+2),
+                cpu->R[r]
+            );
+            cpu->PC += 4;
+            break;
 
         // --- reserved ---
         case 0b1111:
         case 0b1011:
         case 0b0111:
-        case 0b0011:
         default:
             cpu->PC += 2;
             break;
         }
-
     }
-
 }
 
 
@@ -90,13 +94,16 @@ int main() {
     ram.data[2] = 0xaa;
     ram.data[3] = (uint8)Instruction::MOV;
     ram.data[4] = 0b00010001;
-    ram.data[5] = 0xf0;
+    ram.data[6] = 0xf0;
     ram.data[7] = (uint8)Instruction::MOV;
     ram.data[8] = 0b00100010;
     ram.data[9] = 0x00;
     ram.data[10] = (uint8)Instruction::MOV;
     ram.data[11] = 0b00100011;
     ram.data[12] = 0x08;
+    ram.data[13] = (uint8)Instruction::MOV;
+    ram.data[14] = 0b00110011;
+    ram.data[16] = 0xaa;
 
     ram.data[0xf0] = 0x1a;
     ram.data[0xf1] = 0xa1;
