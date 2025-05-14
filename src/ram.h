@@ -38,7 +38,7 @@ struct RAM
         data[pos] = value;
     }
 
-    void set2Bytes(int pos, uint8 value) {
+    void set2Bytes(int pos, uint16 value) {
         if (pos + 2 > _size) {
             throw std::out_of_range(
                 "RAM ERROR: failed to set 2 bytes to position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)

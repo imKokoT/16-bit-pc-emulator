@@ -2,6 +2,7 @@
 #include "cpu.h"
 #include "ram.h"
 #include <iostream>
+#include <fstream>
 
 
 namespace instructions {
@@ -13,12 +14,12 @@ namespace instructions {
         
         switch (c >> 4 & 0b1111)
         {
-        // --- 1 byte register ---
+        // --- 1 byte register (R) ---
         case 0b0000: // immediate
             cpu->R[r] = ram->getByte(cpu->PC+2);
             cpu->PC += 3;
             break;
-        case 0b0001: // from mem address
+        case 0b0001: // from RAM address
             cpu->R[r] = ram->getByte(ram->get2Bytes(cpu->PC+2));
             cpu->PC += 4;
             break;
@@ -48,9 +49,44 @@ namespace instructions {
             cpu->PC += 4;
             break;
 
+        // --- 2 bytes register (WR) ---
+        case 0b1000: // immediate
+            cpu->WR[r] = ram->get2Bytes(cpu->PC+2);
+            cpu->PC += 4;
+            break;
+        case 0b1001: // from RAM address
+            cpu->WR[r] = ram->get2Bytes(ram->get2Bytes(cpu->PC+2));
+            cpu->PC += 4;
+            break;
+        case 0b1010: // from register
+            tmp = ram->getByte(cpu->PC+2); // get other register data
+
+            // check other register
+            switch (tmp >> 2 & 0b11) { 
+            case 0b00:  
+                cpu->WR[r] = cpu->R[tmp >> 4];
+                break;
+            case 0b01:
+                cpu->WR[r] = cpu->WR[tmp >> 4];
+                break;
+            case 0b10:
+            case 0b11:
+                cpu->WR[r] = cpu->getSpecialRegister(tmp >> 4);
+                break;
+            }
+
+            cpu->PC += 3;
+            break;
+        case 0b1011: // to address
+            ram->set2Bytes(
+                ram->get2Bytes(cpu->PC+2),
+                cpu->WR[r]
+            );
+            cpu->PC += 4;
+            break;
+
         // --- reserved ---
         case 0b1111:
-        case 0b1011:
         case 0b0111:
         default:
             cpu->PC += 2;
@@ -89,6 +125,7 @@ int main() {
 
     CPU_16x cpu;
     RAM ram(256);
+    // R
     ram.data[0] = (uint8)Instruction::MOV;
     ram.data[1] = 0;
     ram.data[2] = 0xaa;
@@ -104,6 +141,23 @@ int main() {
     ram.data[13] = (uint8)Instruction::MOV;
     ram.data[14] = 0b00110011;
     ram.data[16] = 0xaa;
+    // WR
+    ram.data[20] = (uint8)Instruction::MOV;
+    ram.data[21] = 0b10000000;
+    ram.data[22] = 0xef;
+    ram.data[23] = 0xfe;
+    ram.data[24] = (uint8)Instruction::MOV;
+    ram.data[25] = 0b10010001;
+    ram.data[27] = 0xf0;
+    ram.data[28] = (uint8)Instruction::MOV;
+    ram.data[29] = 0b10100010;
+    ram.data[30] = 0x00;
+    ram.data[31] = (uint8)Instruction::MOV;
+    ram.data[32] = 0b10100011;
+    ram.data[33] = 0x08;
+    ram.data[34] = (uint8)Instruction::MOV;
+    ram.data[35] = 0b10110000;
+    ram.data[37] = 0xa0;
 
     ram.data[0xf0] = 0x1a;
     ram.data[0xf1] = 0xa1;
@@ -133,7 +187,10 @@ int main() {
         std::cerr << "\n\n";
 
         std::cerr << "RAM snapshot dumped to 'ram-dump.bin'\n";
-        // TODO: RAM DUMP TO FILE
+        std::ofstream of("ram-dump.bin", std::ios::binary);
+        for (int i = 0; i < ram.getSize(); i++)
+            of << (char)ram.getByte(i);
+        of.close();
     }
     
     printf("exit emulator\n");
