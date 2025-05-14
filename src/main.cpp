@@ -66,6 +66,22 @@ int main() {
     ram.data[34] = (uint8)Instruction::MOV;
     ram.data[35] = 0b10110000;
     ram.data[37] = 0xa0;
+    // S
+    ram.data[40] = (uint8)Instruction::MOV;
+    ram.data[41] = 0b11000001;
+    ram.data[43] = 0x2b;
+    ram.data[44] = (uint8)Instruction::MOV;
+    ram.data[45] = 0b11110001;
+    ram.data[47] = 0xa2;
+    ram.data[48] = (uint8)Instruction::MOV;
+    ram.data[49] = 0b11010001;
+    ram.data[51] = 0xf0;
+    ram.data[52] = (uint8)Instruction::MOV;
+    ram.data[53] = 0b11110001;
+    ram.data[55] = 0xa4;
+    ram.data[56] = (uint8)Instruction::MOV;
+    ram.data[57] = 0b11100001;
+    ram.data[58] = 0x14;
 
     ram.data[0xf0] = 0x1a;
     ram.data[0xf1] = 0xa1;

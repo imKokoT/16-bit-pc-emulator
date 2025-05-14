@@ -31,6 +31,17 @@ struct CPU_16x
             return 0;
         }
     }
+
+    // sets special register to value
+    // 0 = PC
+    // 1 = SP
+    void setSpecialRegister(int index, int value) {
+        switch (index)
+        {
+        case 0: PC = value;
+        case 1: SP = value;
+        }
+    }
 };
 
 enum class ALUFlag {
