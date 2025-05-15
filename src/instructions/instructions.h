@@ -5,5 +5,6 @@
 /* just including all complex instructions */
 #include "mov.cpp"
 #include "trap.cpp"
+#include "alu/inc.cpp"
 
 #endif // !__INSTRUCTIONS_H__

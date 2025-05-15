@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __INSTUCTION_MOV_H__
-#define __INSTUCTION_MOV_H__
+#ifndef __INSTUCTION_MOV_CPP__
+#define __INSTUCTION_MOV_CPP__
 #include "../cpu.h"
 #include "../ram.h"
 
@@ -130,4 +130,4 @@ namespace instructions {
     }
 }
 
-#endif // !__INSTUCTION_MOV_H__
+#endif // !__INSTUCTION_MOV_CPP__

@@ -1,13 +1,13 @@
 #pragma once
-#ifndef __INSTUCTION_TRAP_H__
-#define __INSTUCTION_TRAP_H__
+#ifndef __INSTUCTION_TRAP_CPP__
+#define __INSTUCTION_TRAP_CPP__
 #include "../cpu.h"
 #include "../ram.h"
 #include<iostream>
 #include<fstream>
 
 namespace instructions {
-    void trap(CPU_16x* cpu, RAM* ram, bool pause = true) {
+    void trap(CPU_16x* cpu, RAM* ram, bool pause = true, bool incPC = true) {
         std::cerr << "TRAPPED at " << cpu->PC << "\n\n";
 
         std::cerr << "CPU snapshot:\n";
@@ -35,8 +35,9 @@ namespace instructions {
 
         if (pause)
             std::system("pause");
-        cpu->PC++;
+        if (incPC)
+            cpu->PC++;
     }
 }
 
-#endif // !__INSTUCTION_TRAP_H__
+#endif // !__INSTUCTION_TRAP_CPP__
