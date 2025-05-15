@@ -3,7 +3,7 @@
 #define __CPU_H__
 #include "config.h"
 
-enum class ALUFlag;
+enum class Flag;
 
 
 struct CPU_16x
@@ -15,7 +15,7 @@ struct CPU_16x
     uint16 SP;
     uint16 flags;
 
-    bool getFlag(ALUFlag flag) {
+    bool getFlag(Flag flag) {
         return flags & (uint16)flag;
     }
 
@@ -44,13 +44,15 @@ struct CPU_16x
     }
 };
 
-enum class ALUFlag {
+enum class Flag {
     C = 0x01,
     O = 0x02,
     E = 0x04,
     B = 0x08,
     Z = 0x0f,
-    N = 0x10
+    N = 0x10,
+
+    D = 0x8000, // debug mode; will call TRAP after every instruction
 };
 
 enum class Instruction {
@@ -73,6 +75,9 @@ enum class Instruction {
     // Branch
     CMP,
     JMP,
+
+    // Debugging
+    TRAP,
 };
 
 #endif // !__CPU_H__

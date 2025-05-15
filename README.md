@@ -50,7 +50,7 @@ M - set mode
     - 11 = move to address
 R - target register address
 
-Command length: 2-4
+Command length: 3-4
 0b0**0000001**_LTMMRRRR \[0x*RR*\] \[0xIIII\] \[0xAAAA\]
 
 ## ALU
@@ -222,3 +222,7 @@ Command length: 2-5
 ## Branch
 #### CMP
 #### JMP
+
+## Debugging
+#### TRAP 
+Break point.
