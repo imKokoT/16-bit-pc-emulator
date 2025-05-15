@@ -59,8 +59,8 @@ Increment data.
 
 R - register address
 T - register type (length)
-    - 00 = 1 byte register
-    - 01 = 2 bytes register
+    - 00 = R register
+    - 01 = WR register
     - 10 = special
 X - what to increment
     - 0 = register
@@ -75,15 +75,18 @@ X=1 | 0b0**0000010**_TT0XRRRR
 Decrement data.
 
 R - register address
-L - register type (length)
-    - 0 = 1 byte register
-    - 1 = 2 bytes register
+T - register type (length)
+    - 00 = R register
+    - 01 = WR register
+    - 10 = special
 X - what to increment
     - 0 = register
     - 1 = memory address
+A - address
 
 Command length: 2-4
-0b0**0000011**_LXRRRR00 \[0xMMMM\]
+X=0 | 0b0**0000011**_L00XRRRR 0xAAAA
+X=1 | 0b0**0000011**_TT0XRRRR
     
 #### ADD
 Add two integers.

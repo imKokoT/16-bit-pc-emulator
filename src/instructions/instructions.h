@@ -6,5 +6,6 @@
 #include "mov.cpp"
 #include "trap.cpp"
 #include "alu/inc.cpp"
+#include "alu/dec.cpp"
 
 #endif // !__INSTRUCTIONS_H__

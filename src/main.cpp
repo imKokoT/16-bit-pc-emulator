@@ -17,6 +17,7 @@ void run(CPU_16x* cpu, RAM* ram) {
         case Instruction::TRAP: instructions::trap(cpu, ram); break;
         // ALU
         case Instruction::INC: instructions::inc(cpu, ram); break;
+        case Instruction::DEC: instructions::dec(cpu, ram); break;
         case Instruction::STP:
             run = false;
             break;
@@ -40,16 +41,16 @@ int main() {
 
     CPU_16x cpu;
     RAM ram(256);
-    ram.data[0x00] = (uint8)Instruction::INC;
+    ram.data[0x00] = (uint8)Instruction::DEC;
     ram.data[0x01] = 0x00;
-    ram.data[0x02] = (uint8)Instruction::INC;
+    ram.data[0x02] = (uint8)Instruction::DEC;
     ram.data[0x03] = 0x40;
-    ram.data[0x04] = (uint8)Instruction::INC;
+    ram.data[0x04] = (uint8)Instruction::DEC;
     ram.data[0x05] = 0x81;
-    ram.data[0x06] = (uint8)Instruction::INC;
+    ram.data[0x06] = (uint8)Instruction::DEC;
     ram.data[0x07] = 0x10;
     ram.data[0x09] = 0xf0;
-    ram.data[0x0a] = (uint8)Instruction::INC;
+    ram.data[0x0a] = (uint8)Instruction::DEC;
     ram.data[0x0b] = 0x90;
     ram.data[0x0d] = 0xf0;
 
