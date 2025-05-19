@@ -30,7 +30,7 @@ namespace instructions {
     void inc(CPU_16x* cpu, RAM* ram){
         int c = ram->get2Bytes(cpu->PC);
         int r = c & 0b1111;
-        int a, b;
+        uint16 tmp;
 
         if (c & 0x10) { // memory
             int pos = ram->get2Bytes(cpu->PC+2);
@@ -48,11 +48,14 @@ namespace instructions {
                 _inc(cpu, cpu->R[r]);
                 break;
             case 0b01: // WR register
-                cpu->WR[r]++;
+                _inc(cpu, cpu->WR[r]);
                 break;
             case 0b10: // special
             case 0b11:
-                cpu->setSpecialRegister(r, cpu->getSpecialRegister(r)+1);
+                // tmp = cpu->getSpecialRegister(r);
+                // _inc(cpu, tmp);
+                // cpu->setSpecialRegister(r, tmp);
+                _inc(cpu, cpu->getSpecialRegisterRef(r));
                 break;
             }
             cpu->PC += 2;

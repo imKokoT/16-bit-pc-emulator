@@ -53,6 +53,8 @@ int main() {
     ram.data[0x08] = 0x00;
     ram.data[0x09] = (uint8)Instruction::INC;
     ram.data[0x0a] = 0x40;
+    ram.data[0x09] = (uint8)Instruction::INC;
+    ram.data[0x0a] = 0x81;
 
     ram.data[0xf0] = 0xfe;
     ram.data[0xf1] = 0xff;

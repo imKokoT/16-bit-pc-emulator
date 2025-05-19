@@ -32,6 +32,18 @@ struct CPU_16x
         }
     }
 
+    // returns special register reference
+    // 0 = PC; default
+    // 1 = SP
+    uint16& getSpecialRegisterRef(int index) {
+        switch (index)
+        {
+        case 0: return PC;
+        case 1: return SP;
+        default: return PC;
+        }
+    }
+
     // sets special register to value
     // 0 = PC
     // 1 = SP
