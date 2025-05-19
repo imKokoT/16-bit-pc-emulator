@@ -7,9 +7,30 @@
 #include<fstream>
 
 namespace instructions {
+
+    // increment x with setting ALU flags
+    void _inc(CPU_16x* cpu, uint8& x) {
+        cpu->flags &= ~50;                         // clear O,Z,N
+        cpu->flags |= ((int8)x == INT8_MAX) << 1;  // O
+        x++;                                       // compute result
+        cpu->flags |= ((int8)x < 0) << 5;          // N
+        cpu->flags |= (x == 0) << 4;         // Z
+    }
+
+    // increment x with setting ALU flags
+    void _inc(CPU_16x* cpu, uint16& x) {
+        cpu->flags &= ~50;                           // clear O,Z,N
+        cpu->flags |= ((int16)x == INT16_MAX) << 1;  // O
+        x++;                                         // compute result
+        cpu->flags |= ((int16)x < 0) << 5;           // N
+        cpu->flags |= ((int16)x == 0) << 4;          // Z
+    }
+
+    // INC instruction
     void inc(CPU_16x* cpu, RAM* ram){
         int c = ram->get2Bytes(cpu->PC);
         int r = c & 0b1111;
+        int a, b;
 
         if (c & 0x10) { // memory
             int pos = ram->get2Bytes(cpu->PC+2);
@@ -24,7 +45,7 @@ namespace instructions {
             switch (c >> 6 & 0x3)
             {
             case 0b00: // R register
-                cpu->R[r]++;
+                _inc(cpu, cpu->R[r]);
                 break;
             case 0b01: // WR register
                 cpu->WR[r]++;

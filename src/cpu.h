@@ -49,8 +49,8 @@ enum class Flag {
     O = 0x02,
     E = 0x04,
     B = 0x08,
-    Z = 0x0f,
-    N = 0x10,
+    Z = 0x10,
+    N = 0x20,
 
     D = 0x8000, // debug mode; will call TRAP after every instruction
 };

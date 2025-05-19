@@ -56,6 +56,7 @@ Command length: 3-4
 ## ALU
 #### INC
 Increment data.
+**FLAGS: O,Z,N**
 
 R - register address
 T - register type (length)
@@ -73,6 +74,7 @@ X=1 | 0b0**0000010**_TT0XRRRR
 
 #### DEC
 Decrement data.
+**FLAGS: O,Z,N**
 
 R - register address
 T - register type (length)
