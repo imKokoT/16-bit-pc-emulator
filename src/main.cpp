@@ -56,6 +56,13 @@ int main() {
     ram.data[0x09] = (uint8)Instruction::INC;
     ram.data[0x0a] = 0x81;
 
+    ram.data[0x0b] = (uint8)Instruction::INC;
+    ram.data[0x0c] = 0x10;
+    ram.data[0x0e] = 0xf0;
+    ram.data[0x0f] = (uint8)Instruction::INC;
+    ram.data[0x10] = 0x90;
+    ram.data[0x12] = 0xf0;
+
     ram.data[0xf0] = 0xfe;
     ram.data[0xf1] = 0xff;
     cpu.flags = 0x8000; // debug enabled

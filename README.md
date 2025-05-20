@@ -69,7 +69,7 @@ X - what to increment
 A - address
 
 Command length: 2-4
-X=0 | 0b0**0000010**_L00XRRRR 0xAAAA
+X=0 | 0b0**0000010**_L00X0000 0xAAAA
 X=1 | 0b0**0000010**_TT0XRRRR
 
 #### DEC
@@ -87,7 +87,7 @@ X - what to increment
 A - address
 
 Command length: 2-4
-X=0 | 0b0**0000011**_L00XRRRR 0xAAAA
+X=0 | 0b0**0000011**_L00X0000 0xAAAA
 X=1 | 0b0**0000011**_TT0XRRRR
     
 #### ADD

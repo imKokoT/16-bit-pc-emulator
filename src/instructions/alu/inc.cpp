@@ -14,7 +14,7 @@ namespace instructions {
         cpu->flags |= ((int8)x == INT8_MAX) << 1;  // O
         x++;                                       // compute result
         cpu->flags |= ((int8)x < 0) << 5;          // N
-        cpu->flags |= (x == 0) << 4;         // Z
+        cpu->flags |= (x == 0) << 4;               // Z
     }
 
     // increment x with setting ALU flags
@@ -30,14 +30,15 @@ namespace instructions {
     void inc(CPU_16x* cpu, RAM* ram){
         int c = ram->get2Bytes(cpu->PC);
         int r = c & 0b1111;
-        uint16 tmp;
 
         if (c & 0x10) { // memory
             int pos = ram->get2Bytes(cpu->PC+2);
             if (c & 0x80)
-                ram->set2Bytes(pos, ram->get2Bytes(pos)+1);
+                // ram->set2Bytes(pos, ram->get2Bytes(pos)+1);
+                _inc(cpu, ram->get2BytesRef(pos));
             else 
-                ram->setByte(pos, ram->getByte(pos)+1);
+                // ram->setByte(pos, ram->getByte(pos)+1);
+                _inc(cpu, ram->getByteRef(pos));
 
             cpu->PC += 4;
         } 
@@ -52,9 +53,6 @@ namespace instructions {
                 break;
             case 0b10: // special
             case 0b11:
-                // tmp = cpu->getSpecialRegister(r);
-                // _inc(cpu, tmp);
-                // cpu->setSpecialRegister(r, tmp);
                 _inc(cpu, cpu->getSpecialRegisterRef(r));
                 break;
             }
