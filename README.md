@@ -12,11 +12,12 @@ PC - Program Counter
 SP - Stack Pointer
 #### flags
 C - Carry (unsigned overflow)
-O - Overflow
+O - Overflow (signed overflow)
 E - Equal
 B - A > B
 Z - Zero
 N - Negative
+BW - Borrow
 
 ## raw Instructions
 #### IDL
@@ -69,8 +70,8 @@ X - what to increment
 A - address
 
 Command length: 2-4
-X=0 | 0b0**0000010**_L00X0000 0xAAAA
 X=1 | 0b0**0000010**_TT0XRRRR
+X=0 | 0b0**0000010**_L00X0000 0xAAAA
 
 #### DEC
 Decrement data.
@@ -87,8 +88,8 @@ X - what to increment
 A - address
 
 Command length: 2-4
-X=0 | 0b0**0000011**_L00X0000 0xAAAA
 X=1 | 0b0**0000011**_TT0XRRRR
+X=0 | 0b0**0000011**_L00X0000 0xAAAA
     
 #### ADD
 Add two integers.

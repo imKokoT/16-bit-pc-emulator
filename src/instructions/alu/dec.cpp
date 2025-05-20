@@ -7,6 +7,25 @@
 #include<fstream>
 
 namespace instructions {
+
+    // increment x with setting ALU flags
+    void _dec(CPU_16x* cpu, uint8& x) {
+        cpu->flags &= ~51;                  // clear O,Z,N
+        cpu->flags |= (x == INT8_MIN) << 1; // O
+        x--;                                // compute result
+        cpu->flags |= (x == 0) << 4;        // Z
+        cpu->flags |= ((int8)x < 0) << 5;   // N
+    }
+
+    // increment x with setting ALU flags
+    void _dec(CPU_16x* cpu, uint16& x) {
+        cpu->flags &= ~51;                   // clear O,Z,N
+        cpu->flags |= (x == INT16_MIN) << 1; // O
+        x--;                                 // compute result
+        cpu->flags |= (x == 0) << 4;         // Z
+        cpu->flags |= ((int16)x < 0) << 5;   // N
+    }
+
     void dec(CPU_16x* cpu, RAM* ram){
         int c = ram->get2Bytes(cpu->PC);
         int r = c & 0b1111;
@@ -14,9 +33,9 @@ namespace instructions {
         if (c & 0x10) { // memory
             int pos = ram->get2Bytes(cpu->PC+2);
             if (c & 0x80)
-                ram->set2Bytes(pos, ram->get2Bytes(pos)-1);
+                _dec(cpu, ram->get2BytesRef(pos));
             else 
-                ram->setByte(pos, ram->getByte(pos)-1);
+                _dec(cpu, ram->getByteRef(pos));
 
             cpu->PC += 4;
         } 
@@ -24,14 +43,14 @@ namespace instructions {
             switch (c >> 6 & 0x3)
             {
             case 0b00: // R register
-                cpu->R[r]--;
+                _dec(cpu, cpu->R[r]);
                 break;
             case 0b01: // WR register
-                cpu->WR[r]--;
+                _dec(cpu, cpu->WR[r]);
                 break;
             case 0b10: // special
             case 0b11:
-                cpu->setSpecialRegister(r, cpu->getSpecialRegister(r)-1);
+                _dec(cpu, cpu->getSpecialRegisterRef(r));
                 break;
             }
             cpu->PC += 2;

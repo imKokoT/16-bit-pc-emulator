@@ -10,20 +10,20 @@ namespace instructions {
 
     // increment x with setting ALU flags
     void _inc(CPU_16x* cpu, uint8& x) {
-        cpu->flags &= ~50;                         // clear O,Z,N
-        cpu->flags |= ((int8)x == INT8_MAX) << 1;  // O
-        x++;                                       // compute result
-        cpu->flags |= ((int8)x < 0) << 5;          // N
-        cpu->flags |= (x == 0) << 4;               // Z
+        cpu->flags &= ~51;                  // clear O,Z,N
+        cpu->flags |= (x == INT8_MAX) << 1; // O
+        x++;                                // compute result
+        cpu->flags |= (x == 0) << 4;        // Z
+        cpu->flags |= ((int8)x < 0) << 5;   // N
     }
 
     // increment x with setting ALU flags
     void _inc(CPU_16x* cpu, uint16& x) {
-        cpu->flags &= ~50;                           // clear O,Z,N
-        cpu->flags |= ((int16)x == INT16_MAX) << 1;  // O
-        x++;                                         // compute result
-        cpu->flags |= ((int16)x < 0) << 5;           // N
-        cpu->flags |= ((int16)x == 0) << 4;          // Z
+        cpu->flags &= ~51;                   // clear O,Z,N
+        cpu->flags |= (x == INT16_MAX) << 1; // O
+        x++;                                 // compute result
+        cpu->flags |= (x == 0) << 4;         // Z
+        cpu->flags |= ((int16)x < 0) << 5;   // N
     }
 
     // INC instruction
