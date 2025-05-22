@@ -33,11 +33,12 @@ namespace instructions {
 
         if (c & 0x10) { // memory
             int pos = ram->get2Bytes(cpu->PC+2);
-            if (c & 0x80)
-                // ram->set2Bytes(pos, ram->get2Bytes(pos)+1);
-                _inc(cpu, ram->get2BytesRef(pos));
+            if (c & 0x80) {
+                uint16 tmp = ram->get2Bytes(pos);
+                _inc(cpu, tmp);
+                ram->set2Bytes(pos, tmp);
+            }
             else 
-                // ram->setByte(pos, ram->getByte(pos)+1);
                 _inc(cpu, ram->getByteRef(pos));
 
             cpu->PC += 4;

@@ -32,8 +32,11 @@ namespace instructions {
 
         if (c & 0x10) { // memory
             int pos = ram->get2Bytes(cpu->PC+2);
-            if (c & 0x80)
-                _dec(cpu, ram->get2BytesRef(pos));
+            if (c & 0x80) {
+                uint16 tmp = ram->get2Bytes(pos);
+                _dec(cpu, tmp);
+                ram->set2Bytes(pos, tmp);
+            }
             else 
                 _dec(cpu, ram->getByteRef(pos));
 

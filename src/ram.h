@@ -38,14 +38,16 @@ struct RAM
         return data[pos];
     }
 
-    uint16& get2BytesRef(int pos) {
-        if (pos + 2 > _size) {
-            throw std::out_of_range(
-                "RAM ERROR: failed to get 2 ref bytes from position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)
-            ); 
-        }
-        return *(uint16*)(data + pos); // looks like very unsafe staff ;D
-    }
+    // so sad but this doesn't work 
+    //
+    // uint16& get2BytesRef(int pos) {
+    //     if (pos + 2 > _size) {
+    //         throw std::out_of_range(
+    //             "RAM ERROR: failed to get 2 ref bytes from position "+std::to_string(pos)+"; RAM size " + std::to_string(_size)
+    //         ); 
+    //     }
+    //     return *(uint16*)(data + pos);
+    // }
 
     void setByte(int pos, uint8 value) {
         if (pos + 1 > _size) {
