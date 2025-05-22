@@ -70,8 +70,8 @@ X - what to increment
 A - address
 
 Command length: 2-4
-X=1 | 0b0**0000010**_TT0XRRRR
-X=0 | 0b0**0000010**_L00X0000 0xAAAA
+X=0 | 0b0**0000010**_TT0XRRRR
+X=1 | 0b0**0000010**_L00X0000 0xAAAA
 
 #### DEC
 Decrement data.
@@ -88,26 +88,33 @@ X - what to increment
 A - address
 
 Command length: 2-4
-X=1 | 0b0**0000011**_TT0XRRRR
-X=0 | 0b0**0000011**_L00X0000 0xAAAA
+X=0 | 0b0**0000011**_TT0XRRRR
+X=1 | 0b0**0000011**_L00X0000 0xAAAA
     
 #### ADD
-Add two integers.
+Add two integers. Result stores to X.
+**FLAGS: C,O,Z,N**
 
 R - register address
-L - register type (length)
-    - 0 = 1 byte register
-    - 1 = 2 bytes register
+T - register type (length)
+    - 00 = R register
+    - 01 = WR register
+    - 10 = special
 X - where to add
     - 0 = register
-    - 1 = memory
+    - 1 = memory address
 Y - what to add
     - 00 = immediate
     - 01 = from ram address
     - 10 = from register
 
 Command length: 3-6
-0b0**0000100**_LX*LYY*000 \[0bRRRR*RRRR*\] \[0xMMMM\]
+X=0 Y=00 | 0b0**0000100**_00LYYTTX 0b0000RRRR 0xII \[0xII\]
+X=0 Y=01 | 0b0**0000100**_000YYTTX 0b0000RRRR *0xAAAA*
+X=0 Y=10 | 0b0**0000100**_0*TT*YYTTX 0b*RRRR*RRRR
+X=1 Y=00 | 0b0**0000100**_00LYY0LX 0xAAAA 0xII \[0xII\]
+X=1 Y=01 | 0b0**0000100**_000YY0LX 0xAAAA *0xAAAA*
+X=1 Y=10 | 0b0**0000100**_0*TT*YY0LX 0xAAAA 0b*RRRR*0000
 
 #### SUB
 Subtract two integers.

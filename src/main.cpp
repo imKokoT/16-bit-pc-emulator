@@ -49,20 +49,8 @@ int main() {
     ram.data[0x05] = 0xff;
     ram.data[0x06] = 0xff;
 
-    ram.data[0x07] = (uint8)Instruction::DEC;
-    ram.data[0x08] = 0x00;
-    ram.data[0x09] = (uint8)Instruction::DEC;
-    ram.data[0x0a] = 0x40;
-    ram.data[0x0b] = (uint8)Instruction::DEC;
-    ram.data[0x0c] = 0x81;
-
-    ram.data[0x0d] = (uint8)Instruction::DEC;
-    ram.data[0x0e] = 0x10;
-    ram.data[0x10] = 0xf0;
-    ram.data[0x11] = (uint8)Instruction::DEC;
-    ram.data[0x12] = 0x90;
-    ram.data[0x14] = 0xf0;
-
+    
+    
     ram.data[0xf0] = 0xfe;
     ram.data[0xf1] = 0xff;
     cpu.flags = 0x8000; // debug enabled
