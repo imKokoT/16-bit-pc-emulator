@@ -10,7 +10,7 @@ namespace instructions {
 
     // increment x with setting ALU flags
     void _inc(CPU_16x* cpu, uint8& x) {
-        cpu->flags &= ~51;                  // clear O,Z,N
+        cpu->flags &= ~50;                  // clear O,Z,N
         cpu->flags |= (x == INT8_MAX) << 1; // O
         x++;                                // compute result
         cpu->flags |= (x == 0) << 4;        // Z
