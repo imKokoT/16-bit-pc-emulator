@@ -7,5 +7,6 @@
 #include "trap.cpp"
 #include "alu/inc.cpp"
 #include "alu/dec.cpp"
+#include "alu/add.cpp"
 
 #endif // !__INSTRUCTIONS_H__
