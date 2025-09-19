@@ -1,7 +1,7 @@
-#include "config.h"
-#include "cpu.h"
-#include "ram.h"
-#include "instructions/instructions.h"
+#include "config.hpp"
+#include "cpu.cpp"
+#include "ram.cpp"
+#include "instructions/instructions.hpp"
 #include <iostream>
 #include <fstream>
 

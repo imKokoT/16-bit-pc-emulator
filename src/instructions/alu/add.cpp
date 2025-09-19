@@ -1,6 +1,6 @@
 #pragma once
-#include "../../cpu.h"
-#include "../../ram.h"
+#include "../../cpu.cpp"
+#include "../../ram.cpp"
 #include<iostream>
 #include<stdexcept>
 #include<fstream>
@@ -83,4 +83,4 @@ void add(CPU_16x* cpu, RAM* ram) {
     }
 }
 
-} // !namespace instructions
+} // namespace instructions

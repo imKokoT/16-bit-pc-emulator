@@ -1,7 +1,5 @@
 #pragma once
-#ifndef __RAM_H__
-#define __RAM_H__
-#include "config.h"
+#include "config.hpp"
 #include <iostream>
 #include <string>
 
@@ -81,6 +79,3 @@ struct RAM
         delete[] data;
     }
 };
-
-
-#endif // !__RAM_H__

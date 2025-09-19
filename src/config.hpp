@@ -1,6 +1,5 @@
 #pragma once
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+
 
 typedef wchar_t wchar;
 typedef unsigned __int8 uint8;
@@ -11,5 +10,3 @@ typedef __int8 int8;
 typedef __int16 int16;
 typedef __int32 int32;
 typedef __int64 int64;
-
-#endif // !__CONFIG_H__

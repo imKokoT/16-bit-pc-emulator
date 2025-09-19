@@ -1,7 +1,5 @@
 #pragma once
-#ifndef __CPU_H__
-#define __CPU_H__
-#include "config.h"
+#include "config.hpp"
 
 enum class Flag;
 
@@ -91,5 +89,3 @@ enum class Instruction {
     // Debugging
     TRAP,
 };
-
-#endif // !__CPU_H__
