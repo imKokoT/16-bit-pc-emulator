@@ -49,10 +49,22 @@ int main() {
     ram.data[0x04] = 0x80;
     ram.data[0x05] = 0xff;
     ram.data[0x06] = 0x00;
-    ram.data[0x07] = (uint8)Instruction::ADD;
+    ram.data[0x07] = (uint8)Instruction::ADD; // immediate R
     ram.data[0x08] = 0x00;
     ram.data[0x09] = 0x00;
     ram.data[0x0a] = 0x4;
+    ram.data[0x0b] = (uint8)Instruction::ADD; // immediate WR long + carry
+    ram.data[0x0c] = 0x22;
+    ram.data[0x0d] = 0x00;
+    ram.data[0x0e] = 0x0f;
+    ram.data[0x0f] = 0x18;
+    ram.data[0x10] = (uint8)Instruction::ADD; // WR0 + R0
+    ram.data[0x11] = 0b00010010;
+    ram.data[0x12] = 0x00;
+    ram.data[0x13] = (uint8)Instruction::ADD; // mem 0xf0 + R0
+    ram.data[0x14] = 0b00010001;
+    ram.data[0x16] = 0xf0;
+    ram.data[0x17] = 0x00;
     
     ram.data[0xf0] = 0xfe;
     ram.data[0xf1] = 0xff;

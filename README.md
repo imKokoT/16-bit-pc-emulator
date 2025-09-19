@@ -41,9 +41,7 @@ L - register length
     - 1 = 2 bytes register 
 T - register type
     - 0 = R or WR
-    - 1 = special like PC; map:
-        - 0000 = PC
-        - 0001 = SP
+    - 1 = special
 M - set mode
     - 00 = immediate
     - 01 = from memory address
